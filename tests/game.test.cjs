@@ -35,6 +35,15 @@ function kitchen(methods) {
   return run;
 }
 
+test('shuffle returns a new permutation without changing its input',()=>{
+  const run=game();
+  run('const input=[1,2,2,3,4]; const shuffled=shuffle(input)');
+  assert.equal(run('shuffled.length'),5);
+  assert.deepEqual(Array.from(run('shuffled')).sort(),[1,2,2,3,4]);
+  assert.deepEqual(Array.from(run('input')),[1,2,2,3,4]);
+  assert.equal(run('shuffled!==input'),true);
+});
+
 test('six mystery choices lead to method selection and a fresh five-minute kitchen',()=>{
   const run=game();
   run('beginSelection(); for(let i=0;i<6;i++) pick(i%3)');

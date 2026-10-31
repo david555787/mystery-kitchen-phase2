@@ -62,7 +62,14 @@ let state, timerId, previousFrame;
 const keys = new Set();
 const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clamp = (n,min,max) => Math.min(max,Math.max(min,n));
-const shuffle = list => [...list].sort(() => Math.random()-.5);
+const shuffle = list => {
+  const result=[...list];
+  for(let i=result.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [result[i],result[j]]=[result[j],result[i]];
+  }
+  return result;
+};
 const list = words => words.length<2?words.join(''):`${words.slice(0,-1).join(', ')} and ${words.at(-1)}`;
 const ing = phrase => phrase.replace(/^\w+/,w=>w==='Cut'?'Cutting':w.replace(/e$/,'')+'ing');
 const itemsIn = where => state.basket.filter(i=>i.where===where);
