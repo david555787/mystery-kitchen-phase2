@@ -31,3 +31,9 @@ without needing a click.
 - Result: agent changed scoreDish() so the traditionalist prefers classic ingredients rated perfect, then fresh or warm; if every classic ingredient is bad, the comment names the problem (e.g. "The chicken is burnt. A classic preparation deserves better."); added one regression test; 14 tests pass
 - My check: read git diff to confirm scoring formulas and the other two judges were not touched, ran the tests myself
 - Issue: none
+
+## Prompt 4: blending counted as knife work
+- Prompt: in scoreDish(), stop the technique judge from giving knife-work credit / the "correct knife work" comment to ingredients that were only blended (form 'puree') and never chopped; keep blending-as-method credit, scoring weights and the other judges unchanged; add tests for blended-egg vs prepped ingredient (SPEC criterion 7: judge comments should relate to the dish)
+- Result: agent made knife-work credit require form==='prepped'; when nothing qualifies the technician says "No knife work on this plate"; added one test (blended egg gets no knife-work praise, prepped carrot still does); 15 tests pass
+- My check: read git diff, ran tests myself, played a round with only blending and one with chopping in the browser
+- Issue: None
