@@ -162,6 +162,14 @@ test('judges score only plated food, reward real cooking, apply waste, and stay 
   assert.match(run("scoreDish(state.basket,['Salt']).comments[0]"),/not cooked through/);
 });
 
+test('traditionalist criticises burnt chicken instead of praising its classic method',()=>{
+  const run=kitchen(['saute','bake']);
+  run("Object.assign(state.basket[0],{where:'plate',done:3,sear:3,exposure:{saute:5}})");
+  const comment=run('scoreDish(state.basket,[]).comments[0]');
+  assert.doesNotMatch(comment,/that is how it should be done/);
+  assert.match(comment,/The chicken is burnt\. A classic preparation deserves better\./);
+});
+
 test('time expiry freezes cooking and replay clears every part of the round',()=>{
   const run=kitchen(['saute','bake']);
   run("state.near='prep'; grab(state.basket[1]); startPrep(state.basket[1]); state.deadline=Date.now()-1; tick()");
