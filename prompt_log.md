@@ -36,10 +36,10 @@ without needing a click.
 - Prompt: in scoreDish(), stop the technique judge from giving knife-work credit / the "correct knife work" comment to ingredients that were only blended (form 'puree') and never chopped; keep blending-as-method credit, scoring weights and the other judges unchanged; add tests for blended-egg vs prepped ingredient (SPEC criterion 7: judge comments should relate to the dish)
 - Result: agent made knife-work credit require form==='prepped'; when nothing qualifies the technician says "No knife work on this plate"; added one test (blended egg gets no knife-work praise, prepped carrot still does); 15 tests pass
 - My check: read git diff, ran tests myself, played a round with only blending and one with chopping in the browser
-- Issue: None
+- Issue: - Issue: I asked for two separate tests (a blended egg gets no knife-work praise; a prepped ingredient still does). The agent combined both cases into one test. Both checks were included, but separate tests would make a failure easier to identify. What I did: reviewed the test and accepted it because both assertions are present and asked the agent to split it into two tests.
 
 ## Prompt 5: judges' preferences hidden on narrow screens
 - Prompt: on screens <= 700px, style.css line 1 hides .game-judges so players can't see judge preferences while cooking (SPEC criterion 3). Make them reachable without editing line 1: append a commented override at the end of style.css, no game.js changes unless unavoidable, no logic/scoring/wording changes
 - Result: agent appended a commented override at the end of style.css (line 1 untouched, game.js untouched); at <=700px the judges appear below the kitchen controls as a horizontally scrollable strip with portrait, name, preference and description; no CSS test added because the fake DOM can't check layout; 15 tests pass
 - My check: read git diff, ran tests, resized the browser to phone width and checked the strip, the controls and the wide layout
-- Issue: None
+- Issue: The agent only ran the Node tests, which use a fake DOM and cannot check CSS, so passing them did not confirm the mobile layout. The agent said this itself and said browser verification was still needed. What I did: I resized the browser to phone width and checked the judges strip, the kitchen controls and the wide-screen layout myself.
