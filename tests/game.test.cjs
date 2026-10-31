@@ -170,6 +170,18 @@ test('traditionalist criticises burnt chicken instead of praising its classic me
   assert.match(comment,/The chicken is burnt\. A classic preparation deserves better\./);
 });
 
+test('technician credits knife work only for prepped ingredients, not directly blended egg',()=>{
+  const run=kitchen(['saute','blend']);
+  run("state.near='mixer'; grab(state.basket[5]); addTo('mixer',state.basket[5]); simulate(5); grab(state.basket[5]); state.near='plate'; plateItem(state.basket[5])");
+  assert.equal(run('state.basket[5].form'),'puree');
+  assert.equal(run("methodsOf(state.basket[5]).join()"),'blend');
+  assert.doesNotMatch(run('scoreDish(state.basket,[]).comments[2]'),/right knife work/);
+  assert.match(run('scoreDish(state.basket,[]).comments[2]'),/No knife work on this plate/);
+  run("grab(state.basket[5]); relocate(state.basket[5],'table'); state.near='prep'; grab(state.basket[1]); startPrep(state.basket[1]); simulate(2.5); state.near='plate'; plateItem(state.basket[1])");
+  assert.equal(run('state.basket[1].form'),'prepped');
+  assert.match(run('scoreDish(state.basket,[]).comments[2]'),/1 of 1 ingredient handled with the right knife work/);
+});
+
 test('time expiry freezes cooking and replay clears every part of the round',()=>{
   const run=kitchen(['saute','bake']);
   run("state.near='prep'; grab(state.basket[1]); startPrep(state.basket[1]); state.deadline=Date.now()-1; tick()");

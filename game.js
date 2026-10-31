@@ -664,7 +664,7 @@ function scoreDish(basket,seasonings) {
   const classic=pick(d=>d.methods.some(m=>d.info.classic.includes(m)));
   const daring=pick(d=>d.methods.some(m=>!d.info.classic.includes(m))&&['perfect','fresh','warm'].includes(d.quality));
   const shared=pick(d=>d.item.partners.some(id=>plated.some(p=>p.id===id)));
-  const handled=pick(d=>!d.info.prep||d.item.form!=='whole');
+  const handled=pick(d=>d.item.form==='prepped');
   const methods=new Set(dish.flatMap(d=>d.methods));
   const scores=n?[
     1+n*.6+Math.min(seasonings.length,2)*.75+classic.length*.5+perfect.length*.25-burnt.length*1.2-over.length*.5-unsafe.length*2,
@@ -677,7 +677,7 @@ function scoreDish(basket,seasonings) {
   const comments=n?[
     `${classicPick?`${METHODS[classicPick.methods.find(m=>classicPick.info.classic.includes(m))].past} ${name(classicPick)}: that is how it should be done.`:classic.length?`The ${name(classic[0])} is ${QUALITY[classic[0].quality].toLowerCase()}. A classic preparation deserves better.`:'I do not recognise a single classic preparation on this plate.'} ${unsafe.length?`But the ${list(unsafe.map(name))} ${unsafe.length>1?'are':'is'} not cooked through. I cannot eat that.`:burnt.length?`The burnt ${name(burnt[0])} overpowers everything.`:seasonings.length?`The ${seasonings[0].toLowerCase()} pulls it together.`:'It is crying out for salt.'} ${n>=5?'A generous, complete plate.':'A fuller plate would feel more balanced.'}`,
     `${daringPick?`${METHODS[daringPick.methods.find(m=>!daringPick.info.classic.includes(m))].past} ${name(daringPick)}? I did not see that coming, and it works.`:'Every choice here is very by-the-book.'} ${partner?`Cooking the ${name(sharedPick)} together with the ${partner.name.toLowerCase()} lets the flavours mingle.`:'Next time, cook ingredients together so they borrow from each other.'} ${methods.size>=2?'Two techniques give lovely contrast.':'Use both of your methods for more contrast.'}`,
-    `${handled.length} of ${n} ingredient${n>1?'s':''} handled with the right knife work. ${perfect.length?`The ${list(perfect.slice(0,2).map(name))} hit the perfect doneness.`:'Nothing reached the perfect doneness window.'} ${flawed?`The ${name(flawed)} went past perfect into ${flawed.quality}.`:unsafe.length?`The ${name(unsafe[0])} came off the heat too early.`:'Precise, controlled cooking.'}`,
+    `${handled.length?`${handled.length} of ${n} ingredient${n>1?'s':''} handled with the right knife work.`:'No knife work on this plate.'} ${perfect.length?`The ${list(perfect.slice(0,2).map(name))} hit the perfect doneness.`:'Nothing reached the perfect doneness window.'} ${flawed?`The ${name(flawed)} went past perfect into ${flawed.quality}.`:unsafe.length?`The ${name(unsafe[0])} came off the heat too early.`:'Precise, controlled cooking.'}`,
   ]:['An empty plate leaves me without a dish to taste. Plate your ingredients before finishing.','Your basket held six possibilities. Bring them onto the plate so your creativity can shine.','I need plated food to assess your technique. Prep, cook and plate next round.'];
   const subtotal=scores.reduce((sum,score)=>sum+score,0),waste=(6-n)*2;
   return {scores,comments,subtotal,waste,total:Math.max(0,subtotal-waste),unused:basket.filter(i=>i.where!=='plate').map(i=>i.name)};
