@@ -57,3 +57,22 @@ Nice to have:
 - The ability to use a pantry for other miscellaneous ingredients
 
 
+---
+
+## Proposed additions (added by the Phase 2 developer; the spec above is unchanged)
+
+- **Timer start:** The Priorities say the time limit starts when ingredient
+  selection finishes, but the author's README says it was deliberately moved
+  to after the two cooking methods are chosen. The spec should state which one
+  is intended, since the criterion and the game currently disagree.
+- **Timeout vs. Serve:** The criterion "the serve button only works once the
+  player presses finish" doesn't say what should happen when time runs out.
+  Currently the game goes straight to naming/Serve. Suggest stating this.
+- **Judging order:** "Results display each judge's score after their critiques
+  and their combined total afterwards" is hard to check because everything
+  appears on one screen. Suggest saying whether judges should be revealed one
+  at a time.
+- **Pantry:** The spec says the pantry holds "condiments, spices, etc."; the
+  game only has seasonings. Suggest listing exactly which items are required.
+- **Mobile:** The spec doesn't say whether phone screens are supported, which
+  affects whether the judges' preferences must be visible there.
