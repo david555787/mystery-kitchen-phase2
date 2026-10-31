@@ -324,3 +324,10 @@ body:has(.title-screen) .masthead{display:none}
 
 @media(max-width:1000px){.chef{--chef-scale:.85}.vessel-panel{min-width:180px}}
 @media(max-width:700px){.chef{--chef-scale:.62}.ingredient-card{height:215px}.card-back{gap:20px}.card-back small{font-size:6px;letter-spacing:1px}.card-number{font-size:75px}.card-front strong{font-size:18px}.card-front small{font-size:7px;letter-spacing:1px}.shelf{display:none}.walker{height:22%}.line-unit{width:70px;transform:scale(.75);transform-origin:bottom}.line-oven{display:none}.line-group{gap:2vw}.dish-away{font-size:4px}.station-prompt{font-size:6px;padding:3px 5px;top:-24px}.station-prep .station-prompt,.station-stove .station-prompt,.station-oven .station-prompt{bottom:-28px}.hob,.burner,.cookware,.oven-top,.oven-window{border-width:2px}.pot{border-width:3px}.oven-controls span{font-size:6px;padding:2px 5px}.spice-rack{border-bottom-width:3px}.spice-jar small{font-size:3px;padding:2px 0}.cutting-board{border-width:1px;border-radius:4px}.serving-plate{left:25%}.vessel-panel{min-width:0}.plate-report ul{grid-template-columns:1fr}}
+/* Keep cooking judges reachable in a compact horizontal strip on narrow screens. */
+@media(max-width:700px){
+  .game-judges{display:block;margin-top:14px}
+  .game-judges .judges{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(85%,280px);gap:10px;overflow-x:auto;padding-bottom:8px}
+  .game-judges .judge{padding:10px}
+  .game-judges .judge p{font-size:11px}
+}
