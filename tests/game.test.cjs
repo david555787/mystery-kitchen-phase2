@@ -44,6 +44,20 @@ test('shuffle returns a new permutation without changing its input',()=>{
   assert.equal(run('shuffled!==input'),true);
 });
 
+test('intro shows instructions before any click',()=>{
+  const run=game();
+  const markup=run('app.innerHTML');
+  const instructions=markup.match(/<section class="instructions-drawer"[^>]*>[\s\S]*?<\/section>/)[0];
+  assert.doesNotMatch(instructions,/^<section[^>]*\bhidden\b/);
+  assert.match(markup,/data-action="instructions" aria-expanded="true"/);
+  assert.match(instructions,/Choose one of three hidden cards six times/);
+  assert.match(instructions,/select exactly two cooking methods/);
+  assert.match(instructions,/The traditionalist/);
+  assert.match(instructions,/The creative/);
+  assert.match(instructions,/The technician/);
+  assert.match(instructions,/Each basket ingredient left off the plate costs two points/);
+});
+
 test('six mystery choices lead to method selection and a fresh five-minute kitchen',()=>{
   const run=game();
   run('beginSelection(); for(let i=0;i<6;i++) pick(i%3)');
